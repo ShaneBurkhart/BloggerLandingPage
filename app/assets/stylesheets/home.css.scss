@@ -2,7 +2,17 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.banner-container{
+  height:250px;
 
-.banner{
-  padding: 60px 0;
+  .banner{
+    padding: 55px 0 70px;
+  }
+}
+
+.marketing-section{
+  padding-bottom: 80px;
+  &.small{
+    padding-bottom:50px;
+  }
 }
