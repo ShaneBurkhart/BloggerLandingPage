@@ -16,3 +16,13 @@
     padding-bottom:50px;
   }
 }
+
+.notification{
+  width: 300px;
+  position: fixed;
+  top: 0px;
+  left: 50%;
+  text-align: center;
+  margin-left: -150px;
+  display: none;
+}

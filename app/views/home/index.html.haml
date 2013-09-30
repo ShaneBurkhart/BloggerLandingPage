@@ -5,17 +5,29 @@
 
 .marketing-section.row
   .span3.offset3
-    = link_to "Try It Out", "#try-it", class: "try-it btn btn-large btn-block btn-info"
+    = link_to "Try It Out", "#try-it", class: "try-it btn btn-large btn-block btn-info", contenteditable: false
   .span3
-    = link_to "Reserve Your Spot", "#", class: "btn btn-large btn-block btn-success"
+    = link_to "Reserve Your Spot", "#reserve", class: "btn btn-large btn-block btn-success", contenteditable: false
 
-.marketing-section.small.text-center
-  %h2#try-it Try It Out
-  %p Select text to edit
+.marketing-section.small
+  %h2 Dead Simple Content Management
+  %p.lead We make it effortless for you to post your content.  Never write another line of markdown! Create and edit your content in plain english by simply selecting the text.  Try it out now!
 
-.marketing-section.content-editable
-  %h1 Test Blog Title
+.marketing-section.small
+  %h2 We Host It For You
+  %p.lead Never worry about web hosting again!  We will host all of your blogs for you.  Want your own domain?  No worries, we can do that too!
 
-  %p Fusce consectetur dapibus nulla vel vulputate. Fusce suscipit augue volutpat leo rutrum, nec mattis elit ultrices. Donec tincidunt nunc sed odio vestibulum, in semper erat tempor. Nulla a sapien ac velit aliquam pellentesque in non velit. Etiam eget velit sit amet quam lacinia faucibus sit amet nec justo. Etiam in libero semper, blandit sem id, molestie felis. Nulla elementum, odio non bibendum adipiscing, libero urna lobortis risus, vel condimentum neque felis id libero. Sed vitae feugiat sapien. Mauris tristique massa velit. Vivamus feugiat rhoncus semper. Nulla leo erat, vulputate vel neque eget, sollicitudin congue enim. Nullam quis luctus ligula. Donec tortor risus, feugiat a hendrerit quis, posuere vel justo. Praesent porta nunc a placerat tristique.
+.marketing-section.small
+  %h2 Flawless Social Integration
+  %p.lead Built in integration with all of the big social networks.  We make it easy to share your content.
 
-  %p Sed aliquam, libero et congue varius, nisi justo consectetur erat, in ullamcorper elit felis id odio. Maecenas porttitor orci mi, ac congue ipsum auctor eget. Vivamus ultrices feugiat eros, dictum feugiat magna fermentum nec. Vestibulum tincidunt imperdiet pellentesque. Nullam malesuada iaculis suscipit. Phasellus consectetur risus ac diam sollicitudin, scelerisque pellentesque felis facilisis. Quisque aliquam arcu vel justo tempus, ac viverra lectus congue. Praesent id velit suscipit, molestie nisl a, pharetra leo. Etiam semper interdum vestibulum. Phasellus et tincidunt tellus. Phasellus venenatis ligula lectus, et mattis leo sodales vel. Nam faucibus, mi at tristique cursus, lectus sapien imperdiet nunc, lobortis elementum risus elit eget odio.
+.marketing-section
+  %h2 Email Newsletter
+  %p.lead We make it easy to add an email newsletter.  Allow users to sign up to receive your content by email.
+
+%hr
+
+.marketing-section.small#reserve
+  %h2 Reserve Your Spot
+.marketing-section
+
