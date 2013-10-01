@@ -1,12 +1,30 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
 
-  def index
-    @users = User.all
+  def create
+    customer = Stripe::Customer.create email: params[:email],
+        card: params[:stripeToken]
+
+    user = User.new first_name: params[:first], last_name: params[:last],
+        email: params[:email], stripe_id: customer
+
+    if user.save
+      Stripe::Charge.create(
+        :amount => 2500,
+        :currency => "usd",
+        :card => customer,
+        :description => "Early beta access."
+      )
+
+      flash[:notice] = "Thanks for signing up! You have successfully signed up."
+    else
+      flash[:error] = "Something went wrong."
+    end
+
   end
 
-  def show
-    @user = User.find(params[:id])
-  end
+    rescue_from Stripe::CardError do |e|
+      flash[:error] = "Something went wrong with your card."
+      redirect_to root_path
+    end
 
 end

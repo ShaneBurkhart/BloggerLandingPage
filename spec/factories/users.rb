@@ -2,11 +2,9 @@
 
 FactoryGirl.define do
   factory :user do
-    name 'Test User'
-    email 'example@example.com'
-    password 'changeme'
-    password_confirmation 'changeme'
-    # required if the Devise Confirmable module is used
-    # confirmed_at Time.now
+    email "MyString"
+    first_name "MyString"
+    last_name "MyString"
+    stripe_id "MyString"
   end
 end
