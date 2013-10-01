@@ -8,17 +8,8 @@
         = javascript_include_tag "application"
         = csrf_meta_tags
         = yield(:head)
-  - if current_page? root_path
-    %body{contenteditable: "true", data: { controller: controller_name, action: action_name}}
-  - else
     %body{data: { controller: controller_name, action: action_name}}
-  .header
-    .container{contenteditable: "false"}
-      = render 'layouts/navigation'
-  .container
-    .row
-      .span12
-        = render 'layouts/messages'
-        = yield
-    %footer
-  / ! end of .container
+      .container
+        = render "layouts/messages"
+      = yield
+      %footer

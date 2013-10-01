@@ -1,33 +1,118 @@
-.banner-container
-  .banner
-    %h1 Better Content, Made Simple
-    %p.lead We make blogging simple so you can focus on the content.
+- content_for :head, '<script type="text/javascript" src="https://js.stripe.com/v2/"></script>'.html_safe
+.banner-container.editable
+  = image_tag "", class: "banner-loading-image"
+  = image_tag "bridge.png", class: "banner-background-image"
+  .banner-content
+    .container
+      %h1.banner-brand.text-center
+        Blogger
+      .banner.text-center
+        %h1 Better Content, Made Simple
+        %p.lead We make blogging simple so you can focus on the content.
 
-.marketing-section.row
-  .span3.offset3
-    = link_to "Try It Out", "#try-it", class: "try-it btn btn-large btn-block btn-info", contenteditable: false
-  .span3
-    = link_to "Reserve Your Spot", "#reserve", class: "reserve btn btn-large btn-block btn-success", contenteditable: false
+      .marketing-section.row
+        .span3.offset3
+          = link_to "Try It Out", "#try-it", class: "try-it btn btn-large btn-block btn-info", contenteditable: false
+        .span3
+          = link_to "Reserve Your Spot", "#reserve", class: "reserve btn btn-large btn-block btn-success", contenteditable: false
+.container.editable
+  .marketing-section.small
+    %h2.blue Dead Simple Content Management
+    %p.lead We know how important good content is.  We make it easy to manage so you can focus on what's important!  Create and edit your content in plain English, by simply selecting the text.  Try it now by selecting any text on the page.
 
-.marketing-section.small
-  %h2 Dead Simple Content Management
-  %p.lead We make it effortless for you to post your content.  Never write another line of markdown! Create and edit your content in plain english by simply selecting the text.  Try it out now!
+  .marketing-section.small
+    %h2.blue We Host It For You
+    %p.lead Never worry about web hosting again!  We will host all of your blogs for you.  Want your own domain?  No worries, we can do that too!
 
-.marketing-section.small
-  %h2 We Host It For You
-  %p.lead Never worry about web hosting again!  We will host all of your blogs for you.  Want your own domain?  No worries, we can do that too!
+  .marketing-section.small
+    %h2.blue Flawless Social Integration
+    %p.lead Built in integration with all of the social networks.  We make it easy to share, like and tweet your content.
 
-.marketing-section.small
-  %h2 Flawless Social Integration
-  %p.lead Built in integration with all of the big social networks.  We make it easy to share your content.
+  .marketing-section
+    %h2.blue Email Newsletter
+    %p.lead Every blogs come with a built in email sign up form to allow users to receive real time notifactions.  Users will know what you have posted right when you post it.
 
-.marketing-section
-  %h2 Email Newsletter
-  %p.lead We make it easy to add an email newsletter.  Allow users to sign up to receive your content by email.
+  %hr
 
-%hr
+.container
+  #reserve
+    %h2.green Reserve Your Spot
+    %p.lead Get early access to the beta for a flat fee of only $25.00!
+  .marketing-section
+    .row
+      .span5
+        %form#payment-form{action: "", method: "POST"}
+          %span.payment-errors
+          %p Email
+          %input{type: "text", id: "email", name: "email", class: "span3", placeholder: "Email"}
+          %p Card Information
+          .form-row
+            %input{"data-stripe" => "number", size: "20", type: "text", class: "span3", placeholder: "Card Number"}
+          .form-row
+            %input{"data-stripe" => "cvc", size: "4", type: "text", class: "span1", placeholder: "CVC"}
+            %input{"data-stripe" => "exp-month", size: "2", type: "text", class: "span1", placeholder: "MM"}
+            %span
+            %input{"data-stripe" => "exp-year", size: "4", type: "text", class: "span1", placeholder: "YYYY"}
+          %button.btn.btn-success{type: "submit"} Submit Payment
+      .span5
+        %p.lead Our Guarentee
+        %ul
+          %li We will not charge your card anymore than this one time fee of $25.00.
+          %li If at any time, you want your money back, we will refund you in full.
+          %li We will not spam your email.  Your email is used to keep you up to date on our progress and get your feedback.
 
-.marketing-section.small#reserve
-  %h2 Reserve Your Spot
-.marketing-section
+:javascript
+  var elements = document.querySelectorAll('.editable'),
+    editor = new MediumEditor(elements);
+
+:javascript
+  $(document).ready(function(){
+    Stripe.setPublishableKey('pk_test_aRHL7CefYn1FjAjpDgIGVtuE');
+
+    var stripeResponseHandler = function(status, response) {
+      var $form = $('#payment-form');
+
+      if (response.error) {
+        // Show the errors on the form
+        $form.find('.payment-errors').text(response.error.message).parent().show();
+        $form.find('button').prop('disabled', false);
+      } else {
+        // token contains id, last4, and card type
+        var token = response.id;
+        // Insert the token into the form so it gets submitted to the server
+        $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+        // and submit
+        $form.get(0).submit();
+      }
+    };
+
+    var isValid = function(form){
+      var error = form.find(".payment-errors");
+      var msg = "";
+      var email_regex = /^\S+@\S+$/;
+
+      if(!$("#email").val().match(email_regex))
+        msg = "Not a valid email address!";
+
+      if(msg != ""){
+        error.text(msg).parent().show();
+        return false;
+      }
+      return true;
+    };
+
+    $('#payment-form').submit(function(event) {
+      var $form = $(this);
+
+      if(isValid($form)){
+        // Disable the submit button to prevent repeated clicks
+        $form.find('button').prop('disabled', true);
+
+        Stripe.createToken($form, stripeResponseHandler);
+      }
+
+      // Prevent the form from submitting with the default action
+      return false;
+    });
+  });
 
