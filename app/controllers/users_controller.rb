@@ -11,7 +11,7 @@ class UsersController < ApplicationController
       Stripe::Charge.create(
         :amount => 2500,
         :currency => "usd",
-        :card => customer,
+        :customer => customer,
         :description => "Early beta access."
       )
 
@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = "Something went wrong."
     end
-
+    redirect_to root_path
   end
 
     rescue_from Stripe::CardError do |e|
